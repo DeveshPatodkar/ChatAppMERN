@@ -7,12 +7,12 @@ const userRoutes = require('./Routes/userRoutes')
 const chatRoutes = require('./Routes/chatRoutes')
 const videoChatRoutes = require('./Routes/videoChatRoutes')
 const messageRoutes = require('./Routes/messageRoutes')
-const {notFound, errorHandler} = require('./middleware/errorMiddleware')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 
 
 
-const app = express();
 dotenv.config();
+const app = express();
 connectDB();
 
 app.use(express.json());
@@ -22,10 +22,10 @@ app.get('/', (req, res) => {
 })
 
 
-app.use('/api/user',userRoutes)
-app.use('/api/chat',chatRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/chat', chatRoutes)
 app.use('/api/message', messageRoutes)
-app.use('/api/videoChat',videoChatRoutes)
+app.use('/api/videoChat', videoChatRoutes)
 
 app.use(notFound);
 app.use(errorHandler);
@@ -35,7 +35,7 @@ const PORT = process.env.PORT || 5000;
 const server = app.listen(5000, console.log(`server started on PORT ${PORT}`.yellow.bold))
 
 const io = require('socket.io')(server, {
-    
+
     PingTimeout: 60000,
     cors: {
         origin: "http://localhost:3000"
@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
     socket.on('new message', (newMessageRecieved) => {
         var chat = newMessageRecieved.chat;
         if (!chat.users) return console.log("users not defined");
-        
+
         chat.users.forEach(user => {
             if (user._id == newMessageRecieved.sender._id) return;
 
