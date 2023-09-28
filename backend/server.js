@@ -39,9 +39,9 @@ const server = app.listen(5000, console.log(`server started on PORT ${PORT}`.yel
 const io = require('socket.io')(server, {
 
     PingTimeout: 60000,
-    // cors: {
-    //     origin: ["http://localhost:3000", "https://chat-app-frontend-neon.vercel.app", "https://chat-app-frontend-git-master-deveshs-projects.vercel.app"]
-    // }
+    cors: {
+        origin: ["http://localhost:3000", "https://chat-app-frontend-neon.vercel.app", "https://chat-app-frontend-git-master-deveshs-projects.vercel.app"]
+    }
 });
 
 io.on("connection", (socket) => {
@@ -55,8 +55,14 @@ io.on("connection", (socket) => {
         socket.join(room);
     })
 
-    socket.on("typing", (room) => socket.in(room).emit("typing"));
-    socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+    socket.on("typing", (room) => {
+        console.log("typing")
+        socket.in(room).emit("typing")
+    });
+    socket.on("stop typing", (room) => {
+        console.log("s typing")
+        socket.in(room).emit("stop typing")
+    });
 
     socket.on('new message', (newMessageRecieved) => {
         var chat = newMessageRecieved.chat;
@@ -64,7 +70,7 @@ io.on("connection", (socket) => {
 
         chat.users.forEach(user => {
             if (user._id == newMessageRecieved.sender._id) return;
-
+            console.log("msg recieved")
             socket.in(user._id).emit("message recieved", newMessageRecieved)
         });
     });
