@@ -36,14 +36,16 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 const server = app.listen(5000, console.log(`server started on PORT ${PORT}`.yellow.bold))
 
-const io = require('socket.io')(server,
+const io = require("socket.io")(server,
     {
-
-        PingTimeout: 60000,
+        pingTimeout: 60000,
         cors: {
-            origin: "*"
-        }
+            origin: "*",
+            // credentials: true,
+        },
     }
+
+
     // {
     //     PingTimeout: 60000,
     //     handlePreflightRequest: (req, res) => {
