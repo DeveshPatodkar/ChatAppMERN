@@ -36,13 +36,27 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 const server = app.listen(5000, console.log(`server started on PORT ${PORT}`.yellow.bold))
 
-const io = require('socket.io')(server, {
+const io = require('socket.io')(server,
+    //     {
 
-    PingTimeout: 60000,
-    cors: {
-        origin: "*"
+    //     PingTimeout: 60000,
+    //     cors: {
+    //         origin: "*"
+    //     }
+    // }
+    {
+        PingTimeout: 60000,
+        handlePreflightRequest: (req, res) => {
+            const headers = {
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+                "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+                "Access-Control-Allow-Credentials": true
+            };
+            res.writeHead(200, headers);
+            res.end();
+        }
     }
-});
+);
 
 io.on("connection", (socket) => {
     console.log("connected")
