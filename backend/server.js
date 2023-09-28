@@ -37,9 +37,9 @@ const server = app.listen(5000, console.log(`server started on PORT ${PORT}`.yel
 const io = require('socket.io')(server, {
 
     PingTimeout: 60000,
-    cors: {
-        origin: ["http://localhost:3000", "https://chat-app-frontend-neon.vercel.app", "https://chat-app-frontend-git-master-deveshs-projects.vercel.app"]
-    }
+    // cors: {
+    //     origin: ["http://localhost:3000", "https://chat-app-frontend-neon.vercel.app", "https://chat-app-frontend-git-master-deveshs-projects.vercel.app"]
+    // }
 });
 
 io.on("connection", (socket) => {
