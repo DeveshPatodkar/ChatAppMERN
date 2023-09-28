@@ -8,11 +8,13 @@ const chatRoutes = require('./Routes/chatRoutes')
 const videoChatRoutes = require('./Routes/videoChatRoutes')
 const messageRoutes = require('./Routes/messageRoutes')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
+const cors = require('cors')
 
 
 
 dotenv.config();
 const app = express();
+app.use(cors());
 connectDB();
 
 app.use(express.json());
