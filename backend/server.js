@@ -40,9 +40,9 @@ const io = require('socket.io')(server,
     {
 
         PingTimeout: 60000,
-        cors: {
-            origin: "*"
-        }
+        // cors: {
+        //     origin: "*"
+        // }
     }
     // {
     //     PingTimeout: 60000,
