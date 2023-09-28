@@ -40,12 +40,12 @@ const io = require('socket.io')(server, {
 
     PingTimeout: 60000,
     cors: {
-        origin: ["http://localhost:3000", "https://chat-app-frontend-neon.vercel.app", "https://chat-app-frontend-git-master-deveshs-projects.vercel.app"]
+        origin: "*"
     }
 });
 
 io.on("connection", (socket) => {
-
+    console.log("connected")
     socket.on('setup', (userData) => {
         socket.join(userData._id);
         socket.emit('connected');
